@@ -1,0 +1,6 @@
+[build]
+  base = "/"
+  command = "yarn build"
+  publish = "dist"
+  functions = "services/serverless-functions"
+  environment = { NODE_VERSION = "16.13.2" }
