@@ -3,7 +3,7 @@ import { EnumEnviroments } from "../enums/EnumEnviroments";
 import { EventDispatcher } from "../utils/EventDispatcher";
 
 export default class Enviroment {
-    scene: Game;
+    public scene: Game;
     enviroment: EnumEnviroments;
     emitter: EventDispatcher;
 
