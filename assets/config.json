@@ -1,0 +1,84 @@
+{
+    "level": {
+        "id": "case 1",
+        "items": [
+            {
+                "id": "pencil",
+                "pickedup": "How did this get here?",
+                "combine": {
+                    "with": "paper",
+                    "result": "pen & paper"
+                },
+                "errorMessage": "That would be an odd thing to do."
+            },
+            {
+                "id": "paper",
+                "pickedup": "Hmm an unpaid bill... from three years ago, uh oh.",
+                "combine": {
+                    "with": "pencil",
+                    "result": "pen & paper"
+                },
+                "errorMessage": "That would be an odd thing to do."
+            },
+            {
+                "id": "paper",
+                "pickedup": "This will come in handy.",
+                "errorMessage": "That would be an odd thing to do."
+            },
+            {
+                "id": "contactCardBuddy",
+                "errorMessage": "That would be an odd thing to do."
+            },
+            {
+                "id": "contactCardEngineer",
+                "errorMessage": "That would be an odd thing to do."
+            }
+        ],
+        "npc": [
+            {}
+        ],
+        "objects": [
+            {
+                "id": "terminal",
+                "options": [
+                    {
+                        "requireItem": "loginCredentials",
+                        "buttonText": "Use login details to enter client environment.",
+                        "playerReaction": "Hmm... SQL? Squid Language? I better call Buddy",
+                        "setFlag": "hasDBDetails"
+                    }
+                ],
+                "default": "showAds"
+            },
+            {
+                "id": "rolodex",
+                "options": [
+                    {
+                        "buttonText": "Buddy",
+                        "playerReaction": "Luckilly, I have a buddy at the F.A.D.",
+                        "giveItem": "contactCardBuddy"
+                    }
+                ]
+            },
+            {
+                "id": "phone",
+                "options": [
+                    {
+                        "requireItem": "contactCardBuddy",
+                        "getFlag": {
+                            "requiredFlag": "hasDBDetails",
+                            "response": " Yeah I know the guy who built this. Calls himself The Engineer... edgelord more like it.\n Here are his contact details.",
+                            "giveItem": "contactCardEngineer"
+                        },
+                        "default": "This is Buddy's voicemail. Please leave a message after the beep...  *beep*..."
+                    },
+                    {
+                        "requireItem": "contactCardEngineer",
+                        "default": "I didn't order no Spam Illustrated darn it, stop calling! *disconnects*"
+                    }
+                ]
+            }
+        ],
+        "defaultErrorMessage": "I can't do that."
+    }
+}

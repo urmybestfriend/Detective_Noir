@@ -39,7 +39,6 @@ export class MainMenuState extends State {
 		//BG
 
 		this.doorObj = this.scene.add.image(width / 4, height / 4 * 3, "door").setOrigin(0, 1);
-		ImageUtils.fitImage(this.doorObj, this.scene)
 		//Buttons
 		this.createButtons(
 			width / 3 * 2 - 100,
@@ -55,6 +54,7 @@ export class MainMenuState extends State {
 			]
 		);
 		
+		// this.scene.add.dom(100, 100).createFromHTML('<iframe src="https://ponggame.io/"></iframe>');
 	}
 
 	Update() {}
