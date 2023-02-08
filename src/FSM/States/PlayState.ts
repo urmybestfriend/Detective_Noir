@@ -2,7 +2,7 @@ import { EventDispatcher } from "../../utils/EventDispatcher";
 import Game from "../../scenes/Game";
 import { State } from "../State";
 import ImageUtils from "../../utils/ImageUtils";
-import Enviroment from "../../Enviroments/enviroment";
+import Enviroment from "../../Enviroments/Enviroment";
 import { EnumEnviroments } from "../../enums/EnumEnviroments";
 import OfficeEnviroment from "../../Enviroments/OfficeEnviroment";
 import OfficeDesk from "../../Enviroments/OfficeDesk";
@@ -10,15 +10,17 @@ import OfficeRolodex from "../../Enviroments/OfficeRolodex";
 import OfficeTelephone from "../../Enviroments/OfficeTelephone";
 import OfficeTerminal from "../../Enviroments/OfficeTerminal";
 import { InventoryBox } from "../../UI/InventoryBox";
+import { EndState } from "./EndState";
 
 export class PlayState extends State {
-	private bg: Phaser.GameObjects.Image;
 	private scene: Game;
 	private emitter: EventDispatcher;
     private currentEnviroment: Enviroment;
 
     private inventoryBox: InventoryBox;
     private menuBtn: Phaser.GameObjects.Text;
+    private backBtn: Phaser.GameObjects.Text;
+
 
 	constructor(scene) {
 		super();
@@ -29,6 +31,9 @@ export class PlayState extends State {
         this.emitter.on("changeEnviroment", this.changeEnviroment.bind(this));
         this.emitter.on("addInventory", this.addInventory.bind(this));
 
+        this.emitter.on("showInventoryDialog", this.showInventoryDialog.bind(this));
+
+        this.emitter.on("endGame", this.endGame.bind(this));
 		const { width, height } = this.scene.sys.game.scale.gameSize;
 	}
 
@@ -43,7 +48,7 @@ export class PlayState extends State {
 
         this.inventoryBox = new InventoryBox(this.scene, new Phaser.Geom.Rectangle(width/2 - 260, height/2-230, 250, 50));
         this.inventoryBox.setDepth(1000);
-        this.menuBtn = this.scene.add.text(width/2 + 220, height/2-240, "MENU")
+        this.menuBtn = this.scene.add.text(width/2 + 190, height/2-240, "MENU")
             .setOrigin(0.5)
             .setPadding(5)
             .setStyle({ 
@@ -56,6 +61,19 @@ export class PlayState extends State {
             .setDepth(1000)
             .setInteractive()
             .on("pointerdown", () => {})
+        this.backBtn = this.scene.add.text(width/2 + 250, height/2-240, "↩")
+            .setOrigin(0.5)
+            .setPadding(5)
+            .setStyle({
+                backgroundColor: "#666666",
+                fixedWidth: 30,
+                fixedHeight: 30,
+                fontSize: 20
+            })
+            .setAlign("center")
+            .setDepth(1000)
+            .setInteractive()
+            .on("pointerdown", () => { this.currentEnviroment.goBack() })
     }
 
 	Update() {}
@@ -100,5 +118,15 @@ export class PlayState extends State {
 
     addInventory(imgName) {
         this.inventoryBox.addInventory(imgName);
+    }
+
+    showInventoryDialog(txt: String) {
+        this.currentEnviroment.showInventoryDialog(txt);
+    }
+    endGame() {
+        this.inventoryBox.destroy();
+        this.menuBtn.destroy();
+        this.backBtn.destroy();
+		this.scene.mainStateMachine.changeState(new EndState(this.scene));
     }
 }

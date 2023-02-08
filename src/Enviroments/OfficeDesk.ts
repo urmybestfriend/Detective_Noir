@@ -1,7 +1,8 @@
 import { EnumEnviroments } from "../enums/EnumEnviroments";
 import Game from "../scenes/Game";
-import Enviroment from "./enviroment";
+import Enviroment from "./Enviroment";
 import ImageUtils from "../utils/ImageUtils";
+import { InventoryBox } from "../UI/InventoryBox";
 
 export default class OfficeDesk extends Enviroment {
     private bg: Phaser.GameObjects.Image;
@@ -18,8 +19,10 @@ export default class OfficeDesk extends Enviroment {
 
     override load() {
         const { width, height } = this.scene.sys.game.scale.gameSize;
-		this.bg = this.scene.add.image(width/2, height/2, "desk_bg").setOrigin(0.5);
-		ImageUtils.fitImage(this.bg, this.scene)
+		this.bg = this.scene.add.image(width/2, height/2, "desk_bg")
+            .setOrigin(0.5)
+            .setInteractive()
+            .on('pointerdown', () => {this.destroyDialog()});
 
         const scaleX = this.scene.sys.game.canvas.width / 1920;
         const scaleY = this.scene.sys.game.canvas.height / 1080;	
@@ -32,27 +35,35 @@ export default class OfficeDesk extends Enviroment {
             .setOrigin(0, 0.5)
             .setInteractive()
             .on("pointerdown", () => { this.emitter.emit("changeEnviroment", EnumEnviroments.OFFICE_TELEPHONE)});
-        ImageUtils.fitImage(this.telephone, this.scene)
         this.rolodex = this.scene.add.image(x + 200, y + h/2 - 30, "desk_rolodex")
             .setInteractive()
             .on("pointerdown", () => { this.emitter.emit("changeEnviroment", EnumEnviroments.OFFICE_ROLODEX)});
-        ImageUtils.fitImage(this.rolodex, this.scene) 
         this.terminal = this.scene.add.image(x + w, y, "desk_terminal")
             .setOrigin(1, 0)
             .setInteractive()
             .on("pointerdown", () => { this.emitter.emit("changeEnviroment", EnumEnviroments.OFFICE_TERMINAL)});
-        ImageUtils.fitImage(this.terminal, this.scene)
 
-        this.glasses = this.scene.add.image(x + 280, y + h/2 + 50, "glasses")
-            .setInteractive()
-            .on("pointerdown", () => { this.addGlassesToInventory(); });
-        ImageUtils.fitImage(this.glasses, this.scene)
+        if(InventoryBox.getInstance().isAddedInventory("glasses") == false) {
+            this.glasses = this.scene.add.image(x + 280, y + h/2 + 50, "glasses")
+                .setInteractive()
+                .on("pointerdown", () => { this.addGlassesToInventory(); });
+        }
         super.load();    
     }
 
+    destroyDialog() {
+        if(this.inventoryDialog != null) {
+            this.inventoryDialog.destroy();
+            this.inventoryDialog = null;
+        }
+    }
     addGlassesToInventory() {
         this.glasses.destroy();
         this.emitter.emit("addInventory", "glasses");
+    }
+
+    override goBack() {
+        this.emitter.emit("changeEnviroment", EnumEnviroments.OFFICE);
     }
 
     public override destroy() {

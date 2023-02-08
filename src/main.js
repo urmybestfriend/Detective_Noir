@@ -5,23 +5,22 @@ import Game from './scenes/Game';
 import packageJson from '../package.json';
 
 const config = {
-	parent: 'phaser-container',
+	parent: 'phaser-game',
+	scene: [Preloader, Game],
 	dom: {
-		createContainer: true
+		createContainer: true,
 	},
 	type: Phaser.AUTO,
 	scale: {
-		mode: Phaser.Scale.NONE,
+		mode: Phaser.Scale.AUTO,
 		parent: 'phaser-game',
 	},
-	scene: [Preloader, Game],
 	// plugins: {
 	// 	scene: [
 	// 	],
 	// 	global: [
 	// 	],
 	// },
-	mobileWidth: 375,
 	version: packageJson.version
 }
 

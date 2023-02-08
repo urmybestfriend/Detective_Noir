@@ -24,11 +24,14 @@ export default class Preloader extends Phaser.Scene {
 			this.load.image("folder_disable", "ui/folder_disable.png");
 			
 			this.load.image("office_bg", "background/office_bg.png");
+			this.load.image("office_desk", "ui/desk.png");
+			this.load.image("lamp", "ui/lamp.png");
 			this.load.image("badge", "ui/badge.png");
 			this.load.image("telephone", "ui/telephone.png");
 			this.load.image("terminal", "ui/terminal.png");
 			this.load.image("gent", "ui/gent.png");
 			this.load.image("glasses", "ui/glasses.png");
+			this.load.image("call_avatar", "ui/call_avatar.png");
 
 			this.load.image("desk_bg", "background/desk_bg.png");
 			this.load.image("desk_rolodex", "ui/desk_rolodex.png");
@@ -37,6 +40,10 @@ export default class Preloader extends Phaser.Scene {
 			this.load.image("terminal_zoom", "ui/terminal_zoom.png");
 			this.load.image("rolodex_zoom", "ui/rolodex_zoom.png");
 			this.load.image("telephone_zoom", "ui/telephone_zoom.png");
+			this.load.image("card", "ui/card.png");
+			this.load.image("credential", "ui/credential.png");
+			this.load.image("credential_verified", "ui/credential_verified.png");
+			this.load.image("testament", "ui/testament.png");
 
 			this.load.image("white_bg", "background/white_bg.png");
 			this.load.image("telephone_zoom_bg", "background/telephone_zoom_bg.png");

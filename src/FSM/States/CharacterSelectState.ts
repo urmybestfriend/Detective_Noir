@@ -40,7 +40,6 @@ export class CharacterSelectState extends State {
 		//BG
 
         this.bg = this.scene.add.image(width / 2, height / 2, "character_select_bg").setOrigin(0.5);
-		ImageUtils.fitImage(this.bg, this.scene);
 
         const scaleX = this.scene.sys.game.canvas.width / 1920;
 		//Buttons

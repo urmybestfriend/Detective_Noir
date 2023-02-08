@@ -23,7 +23,6 @@ export default class TextDialog extends Phaser.GameObjects.Container{
             .setStrokeStyle(1, 0xb4b4b4)
 
         this.avatar = this.scene.add.image(width/2 - 150, height/2 - 50, "avatar");
-        ImageUtils.fitImage(this.avatar, this.scene);
         this.textPlayer = new TextPlayer(this.scene, {
 			x: width / 2,
 			y: height /2 - 100,
