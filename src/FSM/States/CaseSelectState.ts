@@ -104,6 +104,8 @@ export class CaseSelectState extends State {
                 .setOrigin(0.5)
                 .setInteractive()
                 .on("pointerdown", () => { this.caseSummary(this.caseTitles[index].title)});
+            ImageUtils.zoomImage(btnImg, 50, 50)
+            
             const btnTitleTxt = this.scene.add.text(x, y + 40, this.caseTitles[index].title).setOrigin(0.5);
             btnTitleTxt.setStyle({
                 fontSize: 15,

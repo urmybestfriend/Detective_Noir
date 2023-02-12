@@ -162,11 +162,10 @@ export default class OfficeEnviroment extends Enviroment {
     public override destroy() {
         this.bg.destroy();
         this.desk.destroy();
-        this.chair.destroy();
-        this.gent.destroy();
+        // this.gent.destroy();
 
-        this.terminal.destroy();
+        // this.terminal.destroy();
         this.telephone.destroy();
-        this.badge.destroy();
+        // this.badge.destroy();
     }
 }

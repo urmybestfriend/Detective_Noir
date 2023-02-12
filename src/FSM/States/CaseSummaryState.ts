@@ -55,6 +55,7 @@ export class CaseSummaryState extends State {
         let x = (width - (width*scaleX)) / 2 + 80;
         let y = (height - (height * scaleY)) / 2 + 150;
         this.caseImg = this.scene.add.image(x, y, "folder_enable").setOrigin(0.5);
+        ImageUtils.zoomImage(this.caseImg, 50, 50)
         this.caseTitle = this.scene.add.text(x, y + 40, this.caseTitleTxt)
             .setOrigin(0.5)
             .setStyle({

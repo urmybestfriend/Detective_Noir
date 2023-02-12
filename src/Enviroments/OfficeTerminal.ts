@@ -29,19 +29,13 @@ export default class OfficeTerminal extends Enviroment {
             .setInteractive()
             .on("pointerdown", () => { this.destroyDialog() });
 
-        const scaleX = this.scene.sys.game.canvas.width / 1920;
-        const scaleY = this.scene.sys.game.canvas.height / 1080;
-        let x = (width - (width * scaleX)) / 2;
-        let y = (height - (height * scaleY)) / 2;
-        let w = width * scaleX;
-        let h = height * scaleY;
-
-        this.terminal = this.scene.add.image(x + w / 2, y + h, "terminal_zoom")
+        this.terminal = this.scene.add.image(width / 2, height, "terminal_zoom")
             .setOrigin(0.5, 1)
             .setInteractive()
             .on("pointerup", () => { this.clickTerminal() });
+        ImageUtils.zoomImage(this.terminal, width/1.5, height/1.5);
 
-        this.pongBtn = this.scene.add.text(x + 50, y + 100, "Play Pong")
+        this.pongBtn = this.scene.add.text(100, 200, "Play Pong")
             .setOrigin(0.5)
             .setPadding(10)
             .setStyle({ 

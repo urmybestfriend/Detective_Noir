@@ -46,9 +46,9 @@ export class PlayState extends State {
 		//BG
         this.currentEnviroment = new OfficeEnviroment(this.scene, EnumEnviroments.OFFICE);
 
-        this.inventoryBox = new InventoryBox(this.scene, new Phaser.Geom.Rectangle(width/2 - 260, height/2-230, 250, 50));
+        this.inventoryBox = new InventoryBox(this.scene, new Phaser.Geom.Rectangle(20, 50, 250, 50));
         this.inventoryBox.setDepth(1000);
-        this.menuBtn = this.scene.add.text(width/2 + 190, height/2-240, "MENU")
+        this.menuBtn = this.scene.add.text(width - 90, 40, "MENU")
             .setOrigin(0.5)
             .setPadding(5)
             .setStyle({ 
@@ -61,7 +61,7 @@ export class PlayState extends State {
             .setDepth(1000)
             .setInteractive()
             .on("pointerdown", () => {})
-        this.backBtn = this.scene.add.text(width/2 + 250, height/2-240, "↩")
+        this.backBtn = this.scene.add.text(width - 30, 40, "↩")
             .setOrigin(0.5)
             .setPadding(5)
             .setStyle({

@@ -18,8 +18,6 @@ export class MainMenuState extends State {
 		this.scene = scene;
 		this.emitter = EventDispatcher.getInstance();
 		this.emitter.on("gamedResized", this.resize, this);
-
-		const { width, height } = this.scene.sys.game.scale.gameSize;
 	}
 
 	resize(imgScale) {
@@ -38,11 +36,11 @@ export class MainMenuState extends State {
 		this.overlay.fillRect(0, 0, width, height);
 		//BG
 
-		this.doorObj = this.scene.add.image(width / 4, height / 4 * 3, "door").setOrigin(0, 1);
+		this.doorObj = this.scene.add.image(width / 4, height - 80, "door").setOrigin(0, 1);
 		//Buttons
 		this.createButtons(
-			width / 3 * 2 - 100,
-			height / 3,
+			width / 3 * 2,
+			height / 2 - 50,
 			200,
 			50,
 			10,
@@ -54,7 +52,6 @@ export class MainMenuState extends State {
 			]
 		);
 		
-		// this.scene.add.dom(100, 100).createFromHTML('<iframe src="https://ponggame.io/"></iframe>');
 	}
 
 	Update() {}

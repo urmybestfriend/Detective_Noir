@@ -24,27 +24,23 @@ export default class OfficeDesk extends Enviroment {
             .setInteractive()
             .on('pointerdown', () => {this.destroyDialog()});
 
-        const scaleX = this.scene.sys.game.canvas.width / 1920;
-        const scaleY = this.scene.sys.game.canvas.height / 1080;	
-        let x = (width - (width*scaleX)) / 2;
-        let y = (height - (height * scaleY)) / 2;
-        let w = width*scaleX;
-        let h = height*scaleY;
+        let w = 1920;
+        let h = 1080;
 
-        this.telephone = this.scene.add.image(x, y + h/2 - 30, "desk_telephone")
+        this.telephone = this.scene.add.image(0, height/2 - 30, "desk_telephone")
             .setOrigin(0, 0.5)
             .setInteractive()
             .on("pointerdown", () => { this.emitter.emit("changeEnviroment", EnumEnviroments.OFFICE_TELEPHONE)});
-        this.rolodex = this.scene.add.image(x + 200, y + h/2 - 30, "desk_rolodex")
+        this.rolodex = this.scene.add.image(400, height/2 - 30, "desk_rolodex")
             .setInteractive()
             .on("pointerdown", () => { this.emitter.emit("changeEnviroment", EnumEnviroments.OFFICE_ROLODEX)});
-        this.terminal = this.scene.add.image(x + w, y, "desk_terminal")
+        this.terminal = this.scene.add.image(width, 0, "desk_terminal")
             .setOrigin(1, 0)
             .setInteractive()
             .on("pointerdown", () => { this.emitter.emit("changeEnviroment", EnumEnviroments.OFFICE_TERMINAL)});
 
         if(InventoryBox.getInstance().isAddedInventory("glasses") == false) {
-            this.glasses = this.scene.add.image(x + 280, y + h/2 + 50, "glasses")
+            this.glasses = this.scene.add.image(550, height/2 + 150, "glasses")
                 .setInteractive()
                 .on("pointerdown", () => { this.addGlassesToInventory(); });
         }
