@@ -1,4 +1,5 @@
 import BBCodeText from "phaser3-rex-plugins/plugins/bbcodetext";
+import { Rectangle } from "phaser3-rex-plugins/plugins/gameobjects/shape/shapes/geoms";
 import HiddenInputText from "phaser3-rex-plugins/plugins/hiddeninputtext";
 import RoundRectangle from "phaser3-rex-plugins/plugins/roundrectangle";
 import Label from "phaser3-rex-plugins/templates/ui/label/Label";
@@ -8,6 +9,9 @@ export default class InputSelector extends Sizer {
   private inputField: Label;
   private username: string;
   private cb: Function;
+
+  private roundRect: RoundRectangle;
+  private bbcodeText: BBCodeText;
 
   constructor(
     scene: Phaser.Scene,
@@ -30,7 +34,7 @@ export default class InputSelector extends Sizer {
   }
 
   private createInput(width: number) {
-    const roundRect = new RoundRectangle(
+    this.roundRect = new RoundRectangle(
       this.scene,
       0,
       0,
@@ -38,8 +42,8 @@ export default class InputSelector extends Sizer {
       5,
       5
     ).setFillStyle(0xffffff, 0.4);
-    this.scene.add.existing(roundRect);
-    const bbcodetext = new BBCodeText(this.scene, 0, 0, this.username, {
+    this.scene.add.existing(this.roundRect);
+    this.bbcodeText = new BBCodeText(this.scene, 0, 0, this.username, {
       fontFamily: "Varela Round",
       fontSize: "23px",
       color:  0x344A7D,
@@ -48,12 +52,12 @@ export default class InputSelector extends Sizer {
       valign: "center",
       align: "center"
     });
-    this.scene.add.existing(bbcodetext);
+    this.scene.add.existing(this.bbcodeText);
 
     this.inputField = new Label(this.scene, {
       orientation: "x",
-      background: roundRect,
-      text: bbcodetext,
+      background: this.roundRect,
+      text: this.bbcodeText,
       space: { top: 13, bottom: 13, left: 16, right: 16 },
     }).layout();
     this.scene.add.existing(this.inputField);
@@ -70,7 +74,15 @@ export default class InputSelector extends Sizer {
     textObject.text = hiddenInputText.text = "";
   }
 
+  getEmail() {
+    return this.inputField.text;
+  }
   onClose() {
     this.cb?.(this.inputField.text);
+  }
+
+  destroy() {
+    this.roundRect.destroy();
+    this.bbcodeText.destroy();
   }
 }

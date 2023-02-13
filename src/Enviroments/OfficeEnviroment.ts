@@ -5,6 +5,7 @@ import ImageUtils from "../utils/ImageUtils";
 import TextDialog from "../UI/TextDialog";
 import { NinesliceButton } from "../UI/NineSliceButton";
 import { InventoryBox } from "../UI/InventoryBox";
+import RecruitmentPopup from "../UI/RecruitmentPopups";
 
 export default class OfficeEnviroment extends Enviroment {
     
@@ -17,6 +18,7 @@ export default class OfficeEnviroment extends Enviroment {
     private badge: Phaser.GameObjects.Image;
     private gent: Phaser.GameObjects.Image;
     private gentDialog: TextDialog = null;
+    private recruitmentDlg: RecruitmentPopup;
 
     private gentDialogBtns: NinesliceButton[] = [];
 
@@ -63,6 +65,7 @@ export default class OfficeEnviroment extends Enviroment {
         this.telephone = this.scene.add.image(x + w/2 + 130, y + h - 215, "telephone");
         ImageUtils.zoomImage(this.telephone, 50, 40);
         // this.badge = this.scene.add.image(x + w/2 - 30, y + h/2 - 100, "badge");
+        this.recruitmentDlg = new RecruitmentPopup(this.scene);
         super.load();
     }
 
