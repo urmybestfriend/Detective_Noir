@@ -1,5 +1,6 @@
 import Game from "../scenes/Game";
 import InputSelector from "./InputSelector";
+import { EventDispatcher } from "../utils/EventDispatcher";
 
 export default class RecruitmentPopup extends Phaser.GameObjects.Container {
 
@@ -18,14 +19,13 @@ export default class RecruitmentPopup extends Phaser.GameObjects.Container {
         this.dialogBg = this.scene.add.rectangle(width/2, height/2, width/3, height/3, 0x333333);
         this.title = this.scene.add.text(width/2, height/3 + 20, "Subscribe Email").setColor("#ffffff").setFontSize(25).setOrigin(0.5, 0);
         this.content = this.scene.add.text(width/2, height/3 + 60, "Please type your email for subscribe \n It'll send to our recruitment team").setColor("#ffffff").setFontSize(12).setOrigin(0.5, 0);
-        // this.content = this.scene.add.text(width/2, height/3 + 80, "It'll send to our recruitment team").setColor("#ffffff").setFontSize(12).setOrigin(0.5, 0);
         this.errTxt = this.scene.add.text(width/2, height/2 + 50, "Pleaes enter a email!").setColor("#ff0000").setFontSize(10).setOrigin(0.5, 0).setVisible(false);
 
         this.emailInput = new InputSelector(
             this.scene,
             {
               x: width / 2,
-              y: height / 2 - 20,
+              y: height / 2 + 20,
               width: width/3 - 100,
               height: 20,
             },
@@ -61,6 +61,7 @@ export default class RecruitmentPopup extends Phaser.GameObjects.Container {
             .on("pointerdown", () => { this.cancelDialog() })
     }
 
+
     submitDialog() {
         if(this.emailInput.getEmail() == "" || this.emailInput.getEmail() == "|") {
             this.errTxt.setVisible(true);
@@ -78,7 +79,7 @@ export default class RecruitmentPopup extends Phaser.GameObjects.Container {
         this.dialogBg.destroy();
         this.title.destroy();
         this.content.destroy();
-        this.emailInput?.destroy?.();
+        this.emailInput.destroy();
         this.errTxt.destroy();
         this.submitBtn.destroy();
         this.cancelBtn.destroy();

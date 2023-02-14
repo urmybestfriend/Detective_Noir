@@ -1,5 +1,4 @@
 import BBCodeText from "phaser3-rex-plugins/plugins/bbcodetext";
-import { Rectangle } from "phaser3-rex-plugins/plugins/gameobjects/shape/shapes/geoms";
 import HiddenInputText from "phaser3-rex-plugins/plugins/hiddeninputtext";
 import RoundRectangle from "phaser3-rex-plugins/plugins/roundrectangle";
 import Label from "phaser3-rex-plugins/templates/ui/label/Label";
@@ -9,9 +8,6 @@ export default class InputSelector extends Sizer {
   private inputField: Label;
   private username: string;
   private cb: Function;
-
-  private roundRect: RoundRectangle;
-  private bbcodeText: BBCodeText;
 
   constructor(
     scene: Phaser.Scene,
@@ -30,20 +26,20 @@ export default class InputSelector extends Sizer {
 
     this.layout();
     this.setOrigin(0.5);
-    this.setPosition(this.x, this.y + 45);
+    this.setPosition(this.x, this.y);
   }
 
   private createInput(width: number) {
-    this.roundRect = new RoundRectangle(
+    const roundRect = new RoundRectangle(
       this.scene,
       0,
       0,
       5,
       5,
       5
-    ).setFillStyle(0xffffff, 0.4);
-    this.scene.add.existing(this.roundRect);
-    this.bbcodeText = new BBCodeText(this.scene, 0, 0, this.username, {
+    ).setFillStyle(0xffffff, 0.4).setInteractive().on('pointerup', () => { this.inputField.emit('blur')});
+    this.scene.add.existing(roundRect);
+    const bbcodetext = new BBCodeText(this.scene, 0, 0, this.username, {
       fontFamily: "Varela Round",
       fontSize: "23px",
       color:  0x344A7D,
@@ -52,12 +48,12 @@ export default class InputSelector extends Sizer {
       valign: "center",
       align: "center"
     });
-    this.scene.add.existing(this.bbcodeText);
+    this.scene.add.existing(bbcodetext);
 
     this.inputField = new Label(this.scene, {
       orientation: "x",
-      background: this.roundRect,
-      text: this.bbcodeText,
+      background: roundRect,
+      text: bbcodetext,
       space: { top: 13, bottom: 13, left: 16, right: 16 },
     }).layout();
     this.scene.add.existing(this.inputField);
@@ -65,24 +61,28 @@ export default class InputSelector extends Sizer {
     // @ts-ignore
     this.inputField._edit = new HiddenInputText(this.inputField, {'onOpen': this.onOpen.bind(this)});
     // @ts-ignore
-    this.inputField._edit.on('blur', this.onClose, this);
+    this.inputField._edit.on('blur', this.onClose.bind(this), this);
 
     this.add(this.inputField);
-  }
-
-  onOpen(textObject, hiddenInputText) {
-    textObject.text = hiddenInputText.text = "";
   }
 
   getEmail() {
     return this.inputField.text;
   }
+  
+  onOpen(textObject, hiddenInputText) {
+    console.log(textObject)
+    console.log(hiddenInputText)
+    console.log(textObject._edit)
+    textObject.text = hiddenInputText.text = "";
+  }
+
   onClose() {
+    console.log("asdf")
     this.cb?.(this.inputField.text);
   }
 
   destroy() {
-    this.roundRect.destroy();
-    this.bbcodeText.destroy();
+    this.inputField.setVisible(false);
   }
 }
