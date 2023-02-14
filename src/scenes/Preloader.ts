@@ -13,16 +13,24 @@ export default class Preloader extends Phaser.Scene {
 				res(true);
 			});
 		}).then(() => {
+			//TODO rewrite the preloader
+			this.load.image('start_screen', './_tmp/Screen_StartScreen_BG_01.png')
+
+			this.load.image('player_male', './player/Sprite_Detective_M.png')
+			this.load.image('dame', './npcs/Sprite_Dame_01.png')
+			this.load.image('office_background', './office/Office_Pixel_Art_NoDesk_01.png')
+			this.load.image('rolodex', './office/Rolodex_Sprite_01.png')
+			this.load.image('phone', './office/RotaryPhone_Sprite_01.png')
+			this.load.image('lamp', './office/Lamp_Sprite_01.png')
+			this.load.image('desk', './office/Desk_Sprite_01.png')
 			// loader
 			this.load.image("background", "background/main_bg.png");
 			this.load.image("door", "ui/door.png");
 			this.load.image("character_select_bg", "background/character_select_bg.png");
 			this.load.image("case_select_bg", "background/case_select_bg.png");
 			this.load.image("avatar", "ui/avatar.png")
-
 			this.load.image("folder_enable", "ui/folder_enable.png");
 			this.load.image("folder_disable", "ui/folder_disable.png");
-			
 			this.load.image("office_bg", "background/office_bg.png");
 			this.load.image("office_desk", "ui/desk.png");
 			this.load.image("lamp", "ui/lamp.png");
@@ -32,7 +40,6 @@ export default class Preloader extends Phaser.Scene {
 			this.load.image("gent", "ui/gent.png");
 			this.load.image("glasses", "ui/glasses.png");
 			this.load.image("call_avatar", "ui/call_avatar.png");
-
 			this.load.image("desk_bg", "background/desk_bg.png");
 			this.load.image("desk_rolodex", "ui/desk_rolodex.png");
 			this.load.image("desk_telephone", "ui/desk_telephone.png");
@@ -44,10 +51,8 @@ export default class Preloader extends Phaser.Scene {
 			this.load.image("credential", "ui/credential.png");
 			this.load.image("credential_verified", "ui/credential_verified.png");
 			this.load.image("testament", "ui/testament.png");
-
 			this.load.image("white_bg", "background/white_bg.png");
 			this.load.image("telephone_zoom_bg", "background/telephone_zoom_bg.png");
-
 			this.load.multiatlas("ui", "ui/ui.json", "ui");
 
 			// Create a progressbar.

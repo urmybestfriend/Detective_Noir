@@ -69,8 +69,6 @@ export class CaseSelectState extends State {
 		this.scene = scene;
 		this.emitter = EventDispatcher.getInstance();
 		this.emitter.on("gamedResized", this.resize, this);
-
-		const { width, height } = this.scene.sys.game.scale.gameSize;
 	}
 
 	resize(imgScale) {
@@ -87,28 +85,23 @@ export class CaseSelectState extends State {
 		this.overlay = this.scene.add.graphics();
 		this.overlay.fillStyle(0xffffff);
 		this.overlay.fillRect(0, 0, width, height);
-		//BG
+		//BG        	
 
-        
-        const scaleX = this.scene.sys.game.canvas.width / 1920;
-        const scaleY = this.scene.sys.game.canvas.height / 1080;	
+        this.mainRect = this.scene.add.rectangle(width / 2, height / 2, width, height, 0xb4b4b4);
 
-        this.mainRect = this.scene.add.rectangle(width / 2, height / 2, width*scaleX, height*scaleY, 0xb4b4b4);
-
-        this.sceneTitle = this.scene.add.text(width / 2, (height - (height * scaleY)) / 2 + 40, "SELECT_CASE").setOrigin(0.5).setStyle({fontSize: 40, fontColor: "#ffffff"});
+        this.sceneTitle = this.scene.add.text(width / 2, 20, "SELECT_CASE").setOrigin(0.5).setStyle({fontSize: 15, fontColor: "#ffffff"});
 
         for (let index = 0; index < this.caseTitles.length; index ++) {
-            let x = (width - (width*scaleX)) / 2 + 80 + (index % 4) * ((width * scaleX - 160) / 3);
-            let y = (height - (height * scaleY)) / 2 + 150 + Math.floor((index / 4)) * ((width * scaleX-100) / 3);
+            let x = 50 + (index % 4) * ((width - 100) / 3);
+            let y = 50 + Math.floor((index / 4)) * ((height - 50) / 3);
             const btnImg = this.scene.add.image(x, y, this.caseTitles[index].status?"folder_enable":"folder_disable")
                 .setOrigin(0.5)
                 .setInteractive()
                 .on("pointerdown", () => { this.caseSummary(this.caseTitles[index].title)});
-            ImageUtils.zoomImage(btnImg, 50, 50)
-            
-            const btnTitleTxt = this.scene.add.text(x, y + 40, this.caseTitles[index].title).setOrigin(0.5);
+            ImageUtils.zoomImage(btnImg, 20, 20)
+            const btnTitleTxt = this.scene.add.text(x, y + 20, this.caseTitles[index].title).setOrigin(0.5);
             btnTitleTxt.setStyle({
-                fontSize: 15,
+                fontSize: 8,
                 fontColor: "#ffffff"
             })
             this.caseBtnImg.push(btnImg);

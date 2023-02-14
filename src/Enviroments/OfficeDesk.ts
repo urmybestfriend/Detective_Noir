@@ -23,26 +23,28 @@ export default class OfficeDesk extends Enviroment {
             .setOrigin(0.5)
             .setInteractive()
             .on('pointerdown', () => {this.destroyDialog()});
-
-        let w = 1920;
-        let h = 1080;
+        ImageUtils.fitImage(this.bg, this.scene);
 
         this.telephone = this.scene.add.image(0, height/2 - 30, "desk_telephone")
             .setOrigin(0, 0.5)
             .setInteractive()
             .on("pointerdown", () => { this.emitter.emit("changeEnviroment", EnumEnviroments.OFFICE_TELEPHONE)});
-        this.rolodex = this.scene.add.image(400, height/2 - 30, "desk_rolodex")
+        ImageUtils.zoomImage(this.telephone, 50, 50)
+        this.rolodex = this.scene.add.image(200, height/2 - 30, "desk_rolodex")
             .setInteractive()
             .on("pointerdown", () => { this.emitter.emit("changeEnviroment", EnumEnviroments.OFFICE_ROLODEX)});
+        ImageUtils.zoomImage(this.rolodex, 50, 50)
         this.terminal = this.scene.add.image(width, 0, "desk_terminal")
             .setOrigin(1, 0)
             .setInteractive()
             .on("pointerdown", () => { this.emitter.emit("changeEnviroment", EnumEnviroments.OFFICE_TERMINAL)});
+        ImageUtils.zoomImage(this.terminal, 100, 100)    
 
         if(InventoryBox.getInstance().isAddedInventory("glasses") == false) {
-            this.glasses = this.scene.add.image(550, height/2 + 150, "glasses")
+            this.glasses = this.scene.add.image(280, height/2 + 50, "glasses")
                 .setInteractive()
                 .on("pointerdown", () => { this.addGlassesToInventory(); });
+            ImageUtils.zoomImage(this.glasses, 30,15)
         }
         super.load();    
     }

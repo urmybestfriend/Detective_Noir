@@ -26,44 +26,37 @@ export default class OfficeRolodex extends Enviroment {
             .setOrigin(0.5)
             .setInteractive()
             .on("pointerdown", ()=> {this.destroyDialog()});
-
-        const scaleX = this.scene.sys.game.canvas.width / 1920;
-        const scaleY = this.scene.sys.game.canvas.height / 1080;	
-        let x = (width - (width*scaleX)) / 2;
-        let y = (height - (height * scaleY)) / 2;
-        let w = width*scaleX;
-        let h = height*scaleY;
-
+        ImageUtils.fitImage(this.bg, this.scene)
 
         for(let i = 0 ; i < 5; i ++) {
-            this.cardRects[i] = this.scene.add.rectangle(x + w/2, y + h/2 + i*10, 200 + 10*i, 100, this.rectColors[i])
+            this.cardRects[i] = this.scene.add.rectangle(width/2, height/2 + i*10, 200 + 10*i, 100, this.rectColors[i])
                 .setOrigin(0.5)
                 .setDepth(i)
                 .setInteractive()
                 .on("pointerdown", () => { this.addCardToInventory() })
         }
-        this.cardLabel = this.scene.add.text(x + w/2, y + h/2+30, this.labels[this.labels.length - 1]).setOrigin(0.5).setColor("#000000").setDepth(this.labels.length);
-        this.btn1 = this.scene.add.text(x + w/2 - 200, y + h/2 - 100, "Q")
+        this.cardLabel = this.scene.add.text(width/2, height/2+30, this.labels[this.labels.length - 1]).setOrigin(0.5).setColor("#000000").setDepth(this.labels.length);
+        this.btn1 = this.scene.add.text(width/2 - 150, height/2 - 20, "Q")
             .setOrigin(0.5)
             .setPadding(5)
             .setStyle({ 
                 backgroundColor: "#666666",
-                fixedWidth: 50,
-                fixedHeight: 50,
-                fontSize: 40
+                fixedWidth: 30,
+                fixedHeight: 30,
+                fontSize: 12
             })
             .setAlign("center")
             .setInteractive()
             .on("pointerdown", () => { this.changeRolodex(false) })
             
-        this.btn2 = this.scene.add.text(x + w/2 + 200, y + h/2 - 100, "E")
+        this.btn2 = this.scene.add.text(width/2 + 150, height/2 - 20, "E")
             .setOrigin(0.5)
             .setPadding(5)
             .setStyle({ 
                 backgroundColor: "#666666",
-                fixedWidth: 50,
-                fixedHeight: 50,
-                fontSize: 40
+                fixedWidth: 30,
+                fixedHeight: 30,
+                fontSize: 12
             })
             .setAlign("center")
             .setInteractive()

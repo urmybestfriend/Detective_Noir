@@ -1,3 +1,4 @@
+import ImageUtils from "../utils/ImageUtils";
 import { EventDispatcher } from "../utils/EventDispatcher";
 
 export interface Inventory {
@@ -100,13 +101,11 @@ export class InventoryBox extends Phaser.GameObjects.Container {
     addInventory(imgName) {
         let len = this.inventories.length;
 
-        const image = new Phaser.GameObjects.Image(this.scene, 30 + 1.5*len*30, 0, imgName);
-        let scaleX = 30 / image.width;
-        let scaleY = 20 / image.height;
-        image.setScale(scaleX, scaleY);
+        const image = new Phaser.GameObjects.Image(this.scene, 10 + 1.5*len*12, 0, imgName);
+        ImageUtils.zoomImage(image, 10, 10);
 
-        const circle = this.scene.add.graphics().setPosition(this.rect.x + 30 + 1.5*len*30, this.rect.y).fillCircle(0, 0, 20);
-        const back_circle = this.scene.add.circle(30 + len*1.5*30, 0, 20, 0xffffff)
+        const circle = this.scene.add.graphics().setPosition(this.rect.x + 10 + 1.5*len*12, this.rect.y).fillCircle(0, 0, 8);
+        const back_circle = this.scene.add.circle(10 + len*1.5*12, 0, 8, 0xffffff)
             .setStrokeStyle(1, 0xb4b4b4)
             .setInteractive()
             .on("pointerdown", () => { this.selectInventory(len) });
@@ -158,7 +157,7 @@ export class InventoryBox extends Phaser.GameObjects.Container {
             this.isReadTestament = true;
         }
         if(this.selectedInventoryIndex != index) {
-            this.inventories[index].back_circle.setStrokeStyle(3, 0xb4b4b4);
+            this.inventories[index].back_circle.setStrokeStyle(1.5, 0xb4b4b4);
             this.selectedInventoryIndex = index;
         } else {
             this.selectedInventoryIndex = 100;
@@ -169,9 +168,7 @@ export class InventoryBox extends Phaser.GameObjects.Container {
         if(this.isObjectClicked == true) {
             this.draggingImg?.destroy()
             this.draggingImg = new Phaser.GameObjects.Image(this.scene, pos.x-this.rect.x, pos.y-this.rect.y, this.Inventories[this.selectedInventoryIndex]?.imageName=="credential" && this.isVerifiedPensioner == true ? "credential_verified": this.Inventories[this.selectedInventoryIndex]?.imageName);
-            let scaleX = 30 / this.draggingImg.width;
-            let scaleY = 20 / this.draggingImg.height;
-            this.draggingImg.setScale(scaleX, scaleY);
+            ImageUtils.zoomImage(this.draggingImg, 10, 10)
             this.add(this.draggingImg)
         }
     }
@@ -179,8 +176,8 @@ export class InventoryBox extends Phaser.GameObjects.Container {
     mouseUp(pos, obj) {
         if(this.isObjectClicked == true) {
             if(!obj.texture){
-                let index = (obj.x -30) /45;
-                if(this.inventories[this.selectedInventoryIndex]?.imageName == "glasses" && this.inventories[index].imageName == "testament") {
+                let index = (obj.x -10) / 18;
+                if(this.inventories[this.selectedInventoryIndex]?.imageName == "glasses" && this.inventories[index]?.imageName == "testament") {
                     this.emitter.emit("showInventoryDialog", "Ask about the pensioner");
                     this.isReadTestament = true;
                 }

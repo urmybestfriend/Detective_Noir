@@ -28,21 +28,22 @@ export default class OfficeTerminal extends Enviroment {
             .setOrigin(0.5)
             .setInteractive()
             .on("pointerdown", () => { this.destroyDialog() });
+        ImageUtils.fitImage(this.bg, this.scene);
 
         this.terminal = this.scene.add.image(width / 2, height, "terminal_zoom")
             .setOrigin(0.5, 1)
             .setInteractive()
             .on("pointerup", () => { this.clickTerminal() });
-        ImageUtils.zoomImage(this.terminal, width/1.5, height/1.5);
+        ImageUtils.zoomImage(this.terminal, width/3*2, height/3*2);
 
-        this.pongBtn = this.scene.add.text(100, 200, "Play Pong")
+        this.pongBtn = this.scene.add.text(30, 60, "Play Pong")
             .setOrigin(0.5)
-            .setPadding(10)
+            .setPadding(3)
             .setStyle({ 
                 backgroundColor: "#666666",
-                fixedWidth: 80,
-                fixedHeight: 30,
-                fontSize: 10
+                fixedWidth: 50,
+                fixedHeight: 15,
+                fontSize: 8
             })
             .setAlign("center")
             .setDepth(1000)
@@ -52,18 +53,12 @@ export default class OfficeTerminal extends Enviroment {
 
     openPongGame() {
         const { width, height } = this.scene.sys.game.scale.gameSize;
-        const scaleX = this.scene.sys.game.canvas.width / 1920;
-        const scaleY = this.scene.sys.game.canvas.height / 1080;
-        let x = (width - (width * scaleX)) / 2;
-        let y = (height - (height * scaleY)) / 2;
-        let w = width * scaleX;
-        let h = height * scaleY;
         if(this.pongGame == null) {
             document.getElementsByTagName('canvas')[0].style.zIndex = '-1';
         
-            this.pongGame = this.scene.add.dom(width / 2, y + h - 23)
+            this.pongGame = this.scene.add.dom(width / 2, height-5)
                                 .setOrigin(0.5, 1);
-            this.pongGame.createFromHTML('<iframe width="350" height="350" src="https://ponggame.io/" frameborder="0" allow="accelerometer; autoplay; clip-board-write; encrypted-media; gyroscope; picture-in-picture" style="border-radius: 30px" allowfullscreen></iframe>');
+            this.pongGame.createFromHTML('<iframe width="200" height="110" src="https://ponggame.io/" frameborder="0" allow="accelerometer; autoplay; clip-board-write; encrypted-media; gyroscope; picture-in-picture" style="border-radius: 10px" allowfullscreen></iframe>');
             this.scene.add.container(0, 0).add(this.pongGame);
             this.pongBtn.setText('Close');
         } else {
@@ -123,29 +118,23 @@ export default class OfficeTerminal extends Enviroment {
     }
 
     createBtn() {
+        const {width, height} = this.scene.sys.canvas;
         if (this.testamentBtn == null) {
-            const { width, height } = this.scene.sys.game.scale.gameSize;
-            const scaleX = this.scene.sys.game.canvas.width / 1920;
-            const scaleY = this.scene.sys.game.canvas.height / 1080;
-            let x = (width - (width * scaleX)) / 2;
-            let y = (height - (height * scaleY)) / 2;
-            let w = width * scaleX;
-            let h = height * scaleY;
             this.testamentBtn = new NinesliceButton(
                 this.scene,
-                new Phaser.Math.Vector2(x + w / 2, y + h + 50),
+                new Phaser.Math.Vector2(width / 2, height + 20),
                 "dialog_bg.png",
                 "Testament",
                 [13, 13, 13, 13],
                 () => { this.addTestamentToInventory() },
                 "#ffffff",
-                new Phaser.Math.Vector2(200, 40)
+                new Phaser.Math.Vector2(150, 20)
             );
 
             this.scene.tweens.add({
                 targets: this.testamentBtn,
-                x: x + w / 2,
-                y: y + h - 100,
+                x: width / 2,
+                y: height - 30,
                 ease: "Linear",
                 duration: 300,
                 yoyo: false,
@@ -154,17 +143,11 @@ export default class OfficeTerminal extends Enviroment {
     }
 
     createGameCompleteBtn() {
+        const {width, height} = this.scene.sys.canvas;
         if (this.gameCompleteBtn == null) {
-            const { width, height } = this.scene.sys.game.scale.gameSize;
-            const scaleX = this.scene.sys.game.canvas.width / 1920;
-            const scaleY = this.scene.sys.game.canvas.height / 1080;
-            let x = (width - (width * scaleX)) / 2;
-            let y = (height - (height * scaleY)) / 2;
-            let w = width * scaleX;
-            let h = height * scaleY;
             this.gameCompleteBtn = new NinesliceButton(
                 this.scene,
-                new Phaser.Math.Vector2(x + w / 2, y + h + 50),
+                new Phaser.Math.Vector2(width / 2, height + 20),
                 "dialog_bg.png",
                 "Game Complete",
                 [13, 13, 13, 13],
@@ -173,13 +156,13 @@ export default class OfficeTerminal extends Enviroment {
                     this.destroyDialog();
                 },
                 "#ffffff",
-                new Phaser.Math.Vector2(200, 40)
+                new Phaser.Math.Vector2(150, 20)
             );
 
             this.scene.tweens.add({
                 targets: this.gameCompleteBtn,
-                x: x + w / 2,
-                y: y + h - 100,
+                x: width / 2,
+                y: height - 30,
                 ease: "Linear",
                 duration: 300,
                 yoyo: false,

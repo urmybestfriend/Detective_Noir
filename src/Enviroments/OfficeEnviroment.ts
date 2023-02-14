@@ -34,14 +34,7 @@ export default class OfficeEnviroment extends Enviroment {
             .on("pointerdown", () => { this.destroyDialog() });
 		ImageUtils.fitImage(this.bg, this.scene)
 
-        const scaleX = this.scene.sys.game.canvas.width / 1920;
-        const scaleY = this.scene.sys.game.canvas.height / 1080;	
-        let x = (width - (width*scaleX)) / 2;
-        let y = (height - (height * scaleY)) / 2;
-        let w = width*scaleX;
-        let h = height*scaleY;
-
-        this.desk = this.scene.add.image(x + w/2 + 30, y + h - 120, "office_desk")
+        this.desk = this.scene.add.image(width/2 + 5, height - 55, "desk")
             .setOrigin(0.5)
             .setInteractive()
             .on("pointerdown", () => { 
@@ -50,7 +43,6 @@ export default class OfficeEnviroment extends Enviroment {
                 else
                     this.destroyDialog();
             })
-        ImageUtils.zoomImage(this.desk, 300, 150);
         // this.chair = this.scene.add.rectangle(x + w/2 + 20, y + h - 100, 50, 90, 0xb4b4b4)
 
         // this.terminal = this.scene.add.image(x + w/2 - 120, y + h - 265, "terminal")
@@ -58,10 +50,8 @@ export default class OfficeEnviroment extends Enviroment {
         //     .setInteractive()
         //     // .on("pointerdown", () => { this.showGentDialog("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris aliquet, felis vel rhoncus pellentesque, neque orcirementum metus, vitae tempor ligula ipsum vel") });
         //     .on("pointerdown", () => { this.showGentDialogBtns() })
-        this.lamp = this.scene.add.image(x + w/2 - 50, y + h - 225, "lamp");
-        ImageUtils.zoomImage(this.lamp, 30, 60);
-        this.telephone = this.scene.add.image(x + w/2 + 130, y + h - 215, "telephone");
-        ImageUtils.zoomImage(this.telephone, 50, 40);
+        this.lamp = this.scene.add.image(width/2 - 10, height - 80, "lamp").setOrigin(0.5);
+        this.telephone = this.scene.add.image(width/2 + 30, height - 76, "telephone").setOrigin(0.5);
         // this.badge = this.scene.add.image(x + w/2 - 30, y + h/2 - 100, "badge");
         super.load();
     }
@@ -103,29 +93,23 @@ export default class OfficeEnviroment extends Enviroment {
     }
 
     showGentDialogBtns() {
+        const {width, height} = this.scene.sys.canvas;
         if(this.gentDialog == null) {
-            const { width, height } = this.scene.sys.game.scale.gameSize;
-            const scaleX = this.scene.sys.game.canvas.width / 1920;
-            const scaleY = this.scene.sys.game.canvas.height / 1080;	
-            let x = (width - (width*scaleX)) / 2;
-            let y = (height - (height * scaleY)) / 2;
-            let w = width*scaleX;
-            let h = height*scaleY;
             if(this.gentDialogBtns.length == 0) {
                 const testament_btn = new NinesliceButton(
                     this.scene, 
-                    new Phaser.Math.Vector2(x + w/2, y + h + 50), 
+                    new Phaser.Math.Vector2(width / 2, height + 20),
                     "dialog_bg.png", 
                     "Testament", 
                     [13, 13, 13, 13], 
                     () => { this.showGentDialog("Asked about testament") },
                     "#ffffff",
-                    new Phaser.Math.Vector2(200, 40)
+                    new Phaser.Math.Vector2(150, 20)
                 );
                 this.scene.tweens.add({
                     targets : testament_btn,
-                    x: x + w/2,
-                    y: y + h - 100,
+                    x: width / 2,
+                    y: height - 30,
                     ease: "Linear",
                     duration: 300,
                     yoyo: false,
@@ -134,20 +118,20 @@ export default class OfficeEnviroment extends Enviroment {
                 if(!InventoryBox.getInstance().isAddedInventory('credential')) {
                     const credential_btn = new NinesliceButton(
                         this.scene, 
-                        new Phaser.Math.Vector2(x + w/2, y + h + 50), 
+                        new Phaser.Math.Vector2(width / 2, height + 50),
                         "dialog_bg.png", 
                         "Credential", 
                         [13, 13, 13, 13], 
                         () => { this.addCredentialToInventory() },
                         "#ffffff",
-                        new Phaser.Math.Vector2(200, 40)
+                        new Phaser.Math.Vector2(150, 20)
                     );
                     this.scene.tweens.add({
                         targets : credential_btn,
-                        x: x + w/2,
-                        y: y + h - 50,
+                        x: width / 2,
+                        y: height - 30,
                         ease: "Linear",
-                        duration: 200,
+                        duration: 300,
                         yoyo: false,
                     })
                     this.gentDialogBtns.push(credential_btn);
@@ -162,10 +146,8 @@ export default class OfficeEnviroment extends Enviroment {
     public override destroy() {
         this.bg.destroy();
         this.desk.destroy();
-        // this.gent.destroy();
 
-        // this.terminal.destroy();
+        this.lamp.destroy();
         this.telephone.destroy();
-        // this.badge.destroy();
     }
 }

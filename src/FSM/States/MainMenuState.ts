@@ -10,7 +10,6 @@ export class MainMenuState extends State {
 	private buttons: Phaser.GameObjects.Text[] = [];
 	private scene: Game;
 	private emitter: EventDispatcher;
-	private doorObj: Phaser.GameObjects.Image;
 
 	constructor(scene) {
 		super();
@@ -36,14 +35,14 @@ export class MainMenuState extends State {
 		this.overlay.fillRect(0, 0, width, height);
 		//BG
 
-		this.doorObj = this.scene.add.image(width / 4, height - 80, "door").setOrigin(0, 1);
+		this.bg = this.scene.add.image(0,0, "start_screen").setOrigin(0);
 		//Buttons
 		this.createButtons(
-			width / 3 * 2,
-			height / 2 - 50,
-			200,
-			50,
-			10,
+			60,
+			100,
+			75,
+			20,
+			2,
 			["START", "HOW", "OPTIONS"],
 			[
 				this.startNewGame.bind(this),
@@ -51,7 +50,6 @@ export class MainMenuState extends State {
 				this.showOption.bind(this),
 			]
 		);
-		
 	}
 
 	Update() {}
@@ -63,7 +61,7 @@ export class MainMenuState extends State {
 			this.buttons[i].destroy();
 		}
 
-
+		this.bg.destroy();
 		this.overlay.destroy();
 		this.buttons = [];
 
@@ -81,14 +79,14 @@ export class MainMenuState extends State {
 		cbs: Function[]
 	) {
 		for (let index = 0; index < labels.length; index++) {
-			const btn = this.scene.add.text(x, y + 70 * index, labels[index])
+			const btn = this.scene.add.text(x, y + 30 * index, labels[index])
 						.setOrigin(0.5)
 						.setPadding(padding)
 						.setStyle({ 
 							backgroundColor: "#b4b4b4",
 							fixedWidth: width,
 							fixedHeight: height,
-							fontSize: 30
+							fontSize: 16
 						})
 						.setAlign("center")
 						.setInteractive({useHandCursor: true})

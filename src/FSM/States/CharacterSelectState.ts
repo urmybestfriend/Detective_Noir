@@ -40,16 +40,16 @@ export class CharacterSelectState extends State {
 		//BG
 
         this.bg = this.scene.add.image(width / 2, height / 2, "character_select_bg").setOrigin(0.5);
-		ImageUtils.zoomImage(this.bg, width, height);
+		ImageUtils.fitImage(this.bg, this.scene);
 
         const scaleX = this.scene.sys.game.canvas.width / 1920;
 		//Buttons
 		this.createButtons(
-			width*scaleX / 4 + (width - width*scaleX)/2,
-			height - 50,
-			150,
-			50,
-			10,
+			width/4,
+			height - 15,
+			60,
+			20,
+			3,
 			["SELECT", "SELECT"],
 			[
 				this.girlSelect.bind(this),
@@ -85,16 +85,15 @@ export class CharacterSelectState extends State {
 		labels: string[],
 		cbs: Function[]
 	) {
-        const scaleX = this.scene.sys.game.canvas.width / 1920;
 		for (let index = 0; index < labels.length; index++) {
-			const btn = this.scene.add.text(x + (this.scene.sys.canvas.width*scaleX / 2) * index, y, labels[index])
+			const btn = this.scene.add.text(x + (this.scene.sys.canvas.width/2) * index, y, labels[index])
 							.setOrigin(0.5)
 							.setPadding(padding)
 							.setStyle({ 
 								backgroundColor: "#b4b4b4",
 								fixedWidth: width,
                                 fixedHeight: height,
-								fontSize: 30
+								fontSize: 12
 							})
 							.setAlign("center")
 							.setInteractive({ useHandCursor: true })

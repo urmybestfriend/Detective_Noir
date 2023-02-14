@@ -24,8 +24,6 @@ export class CaseSummaryState extends State {
 		this.emitter = EventDispatcher.getInstance();
 		this.emitter.on("gamedResized", this.resize, this);
         this.caseTitleTxt = caseTitleTxt;
-
-		const { width, height } = this.scene.sys.game.scale.gameSize;
 	}
 
 	resize(imgScale) {
@@ -44,36 +42,33 @@ export class CaseSummaryState extends State {
 		this.overlay.fillRect(0, 0, width, height);
 		//BG
 
-        
-        const scaleX = this.scene.sys.game.canvas.width / 1920;
-        const scaleY = this.scene.sys.game.canvas.height / 1080;	
+        this.mainRect = this.scene.add.rectangle(width / 2, height / 2, width, height, 0xb4b4b4);
 
-        this.mainRect = this.scene.add.rectangle(width / 2, height / 2, width*scaleX, height*scaleY, 0xb4b4b4);
+        this.sceneTitle = this.scene.add.text(width / 2, 20, "CASE SUMMARY").setOrigin(0.5).setStyle({fontSize: 15, fontColor: "#ffffff"});
 
-        this.sceneTitle = this.scene.add.text(width / 2, (height - (height * scaleY)) / 2 + 40, "CASE SUMMARY").setOrigin(0.5).setStyle({fontSize: 40, fontColor: "#ffffff"});
-
-        let x = (width - (width*scaleX)) / 2 + 80;
-        let y = (height - (height * scaleY)) / 2 + 150;
+        let x = 50;
+        let y = 50;
         this.caseImg = this.scene.add.image(x, y, "folder_enable").setOrigin(0.5);
-        ImageUtils.zoomImage(this.caseImg, 50, 50)
-        this.caseTitle = this.scene.add.text(x, y + 40, this.caseTitleTxt)
+        ImageUtils.zoomImage(this.caseImg, 20, 20);
+
+        this.caseTitle = this.scene.add.text(x, y + 20, this.caseTitleTxt)
             .setOrigin(0.5)
             .setStyle({
-                fontSize: 15,
+                fontSize: 8,
                 fontColor: "#ffffff"
             })
         
-        this.summaryRect = this.scene.add.rectangle(width / 2 + 70, height / 2 + 30, width*scaleX - 200, height*scaleY - 150, 0xffffff).setStrokeStyle(1, 0x000000);
+        this.summaryRect = this.scene.add.rectangle(100, 40, width - 120, height - 50, 0xffffff).setOrigin(0, 0).setStrokeStyle(1, 0x000000);
         
-        this.selectBtn = this.scene.add.text(x, (height*scaleY) + (height - (height*scaleY))/2 - 80, "SELECT")
+        this.selectBtn = this.scene.add.text(x, height - 20, "SELECT")
             .setOrigin(0.5)
-            .setPadding(10)
+            .setPadding(3)
             .setStyle({ 
                 backgroundColor: "#ffffff",
                 color: "#b4b4b4",
-                fixedWidth: 150,
-                fixedHeight: 50,
-                fontSize: 30
+                fixedWidth: 60,
+                fixedHeight: 20,
+                fontSize: 12
             })
             .setAlign("center")
             .setInteractive()

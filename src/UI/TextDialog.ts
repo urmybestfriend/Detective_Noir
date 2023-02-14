@@ -19,25 +19,25 @@ export default class TextDialog extends Phaser.GameObjects.Container{
 		const { width, height } = this.scene.sys.game.scale.gameSize;
 
         const _game = this.scene;
-        this.dialogBox = this.scene.add.rectangle(width/2, height/2 - 100, 300, 100, 0xffffff)
+        this.dialogBox = this.scene.add.rectangle(width/2, height/2 - 30, 200, 80, 0xffffff)
             .setStrokeStyle(1, 0xb4b4b4)
 
-        this.avatar = this.scene.add.image(width/2 - 150, height/2 - 50, "avatar");
-		ImageUtils.zoomImage(this.avatar, 50, 50);
+        this.avatar = this.scene.add.image(width/2 - 100, height/2 + 10, "avatar");
+		ImageUtils.zoomImage(this.avatar, 30, 30)
         this.textPlayer = new TextPlayer(this.scene, {
 			x: width / 2,
-			y: height /2 - 100,
-			width: 300,
-			height: 100,
-			padding: 10,
+			y: height /2 - 30,
+			width: 200,
+			height: 80,
+			padding: 5,
 			wrap: {
-				wrapWidth: 300,
+				wrapWidth: 200,
 				maxLines: 4,
 				lineHeight: 15,
 			},
 			style: {
 				fontFamily: '"Varela Round"',
-				fontSize: "16px",
+				fontSize: "8px",
 				color: 0x00_00_00,
 			},
 			typing: {

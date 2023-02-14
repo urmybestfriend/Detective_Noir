@@ -11,9 +11,13 @@ const config = {
 		createContainer: true,
 	},
 	type: Phaser.AUTO,
+	zoom: 3,
+  	pixelArt: true,
 	scale: {
 		mode: Phaser.Scale.AUTO,
 		parent: 'phaser-game',
+		width: 353,
+		height: 201,
 	},
 	// plugins: {
 	// 	scene: [

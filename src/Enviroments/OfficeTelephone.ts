@@ -25,18 +25,13 @@ export default class OfficeTelephone extends Enviroment {
             .setOrigin(0.5)
             .setInteractive()
             .on("pointerdown", () => {this.destroyDialog()});
+        ImageUtils.fitImage(this.bg, this.scene)
 
-        const scaleX = this.scene.sys.game.canvas.width / 1920;
-        const scaleY = this.scene.sys.game.canvas.height / 1080;	
-        let x = (width - (width*scaleX)) / 2;
-        let y = (height - (height * scaleY)) / 2;
-        let w = width*scaleX;
-        let h = height*scaleY;
-
-        this.telephone = this.scene.add.image(x + w/2, y + h/2, "telephone_zoom")
+        this.telephone = this.scene.add.image(width/2, height/2, "telephone_zoom")
             .setOrigin(0.5)
             .setInteractive()
             .on("pointerup", () => { this.callSb() })
+        ImageUtils.zoomImage(this.telephone, width/2, height/2)
     }
 
     callSb() {
@@ -61,28 +56,22 @@ export default class OfficeTelephone extends Enviroment {
     }
 
     showPhoneDialogBtns() {
-		const { width, height } = this.scene.sys.game.scale.gameSize;
-        const scaleX = this.scene.sys.game.canvas.width / 1920;
-        const scaleY = this.scene.sys.game.canvas.height / 1080;	
-        let x = (width - (width*scaleX)) / 2;
-        let y = (height - (height * scaleY)) / 2;
-        let w = width*scaleX;
-        let h = height*scaleY;
+        const {width, height} = this.scene.sys.canvas;
         if(this.phoneDialogBtns.length == 0) {
             const btn1 = new NinesliceButton(
                 this.scene, 
-                new Phaser.Math.Vector2(x + w/2, y + h + 50), 
+                new Phaser.Math.Vector2(width / 2, height + 20),
                 "dialog_bg.png", 
                 "Know about the pensioner", 
                 [13, 13, 13, 13], 
                 () => { this.nextPhoneDialog() },
                 "#ffffff",
-                new Phaser.Math.Vector2(300, 40)
+                new Phaser.Math.Vector2(150, 20)
             );
             this.scene.tweens.add({
                 targets : btn1,
-                x: x + w/2,
-                y: y + h - 100,
+                x: width / 2,
+                y: height - 30,
                 ease: "Linear",
                 duration: 300,
                 yoyo: false,
